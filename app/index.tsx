@@ -1,7 +1,8 @@
-import React from 'react';
-import { View, Text, Image } from 'react-native';
-import { styles } from './styles';
+import React, { useState } from 'react';
+import { View, Text, Image, StatusBar } from 'react-native';
+import { styles } from '@/styles/globals';
 import { PrimaryButton } from '@/components/PrimaryButton';
+import { TransactionModal } from '@/components/TransactionModal';
 
 const transactions = [
   { id: '1', description: 'Supermercado', amount: -50.75 },
@@ -11,16 +12,16 @@ const transactions = [
 ];
 
 const HomeScreen = () => {
-  const handleAddIncome = () => {
-    alert("Adicionar Receita");
-  };
+  const [modalVisible, setModalVisible] = useState(false);
 
-  const handleAddExpense = () => {
-    alert("Adicionar Despesa");
+  const handleAddTransaction = () => {
+    setModalVisible(true);
   };
 
   return (
     <View style={styles.container}>
+      <StatusBar barStyle="light-content" backgroundColor="#2C5F30" />
+
       <Image source={require("@/assets/images/finance-logo.png")} style={styles.logo} />
       <Text style={styles.greeting}>
         Olá, Usuário!
@@ -33,9 +34,16 @@ const HomeScreen = () => {
       </Text>
 
       <View style={styles.buttonsContainer}>
-        <PrimaryButton text='Adicionar Receita' onPress={handleAddIncome} />
-        <PrimaryButton text='Adicionar Despesa' onPress={handleAddExpense} />
+        <PrimaryButton text='Adicionar Transação' onPress={handleAddTransaction} />
       </View>
+
+      <TransactionModal
+        visible={modalVisible}
+        onClose={() => setModalVisible(false)}
+        onSave={(data) => {
+          alert(`Receita adicionada:\n\n ${JSON.stringify(data)}`); 
+        }}
+      />
 
       <Text style={styles.sectionTitle}>
         Transações Recentes
