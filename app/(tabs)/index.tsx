@@ -3,6 +3,7 @@ import { View, Text, Image, StatusBar, FlatList } from 'react-native';
 import { styles } from '@/styles/globals';
 import { PrimaryButton } from '@/components/PrimaryButton';
 import { TransactionModal } from '@/components/TransactionModal';
+import { Link } from 'expo-router';
 
 const transactions = [
   { id: '1', description: 'Supermercado', amount: -50.75 },
@@ -67,6 +68,10 @@ const HomeScreen = () => {
           </View>
         )}
       />
+
+      <View>
+        <Link href={"/transactions"}>Todas as transações</Link>
+      </View>
     </View>
   );
 };
